@@ -1,0 +1,15 @@
+<p>
+  Start editing to see some magic happen :)
+</p>
+<form [formGroup]="group">
+  <hello name="{{ name }}"></hello>
+  <input type="text" formControlName="title">
+  <button (click)="group.get('title').setValue('title')">Retitle</button>
+  <div formArrayName="items" *ngFor="let item of group.get('items').controls; let i = index">
+    <input type="text" [formControlName]="i">
+    <button (click)="deleteItem(i)">Delete</button>
+  </div>
+  <button (click)="addItem()">Add</button>
+</form>
+
+<pre>{{group.value | json}}</pre>
