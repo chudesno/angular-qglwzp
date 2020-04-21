@@ -13,3 +13,22 @@
 </form>
 
 <pre>{{group.value | json}}</pre>
+<h2>patch</h2>
+<pre>{{patch$ | async | json }}</pre>
+
+<!--
+<form [formGroup]="root" (submitChanges)="...">
+  <input formControlName="a">
+  <div formGroupName="child1">
+    <input formControlName="b1">
+    <input formControlName="b2">
+  </div>
+  <div formArrayName="children" *ngFor="let item of group.get('children').controls; let i = index">
+    <input type="text" [formControlName]="i">
+    <button (click)="deleteItem(i)">Delete</button>
+  </div>
+</form>
+
+
+
+-->

@@ -1,10 +1,11 @@
 import { Component, Input, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ControlContainer, NgForm, FormGroupDirective } from '@angular/forms';
+import { PatchableFormBuilder } from './patchable-form-builder.service';
 
 @Component({
   selector: 'hello',
   template: `
-    <h1>Hello {{name}}!</h1>
+    <div>Hello {{name}}!</div>
     <div [formGroup]="group">
       <input formControlName="helloTitle">
     </div>
@@ -18,7 +19,7 @@ export class HelloComponent implements OnInit {
 
 
   constructor(@Inject(ControlContainer)
-    private readonly _formContainer: NgForm | FormGroupDirective, private _fb: FormBuilder) {
+    private readonly _formContainer: NgForm | FormGroupDirective, private _fb: PatchableFormBuilder) {
     }
 
   ngOnInit() {

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { PatchableFormBuilder, PatchableFormGroup } from './patchable-form-builder.service';
+import { Observable } from 'rxjs';
+import { map, pairwise, startWith } from 'rxjs/operators';
+import * as jiff from 'jiff';
 
 @Component({
   selector: 'my-app',
@@ -9,9 +13,11 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 export class AppComponent implements OnInit {
   name = 'Angular';
 
-  group: FormGroup;
+  group: PatchableFormGroup<any>;
 
-  constructor(private _fb: FormBuilder) {}
+  patch$: Observable<any>;
+
+  constructor(private _fb: PatchableFormBuilder) {}
 
   ngOnInit() {
     this.group = this._fb.group({
@@ -20,7 +26,11 @@ export class AppComponent implements OnInit {
         this._fb.control('item 0')
       ])
     });
-    console.log(this.group.getPatch());
+
+    this.group.get('items')
+
+    this.patch$ = this.group.valueChanges.pipe(startWith(this.group.value), pairwise(), map((d1, d2) => jiff.diff(d1, d2, true)));
+    
   }
 
   addItem() {
